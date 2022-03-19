@@ -1,26 +1,29 @@
 const tabButtons = document.querySelectorAll('.design-list__item')
 const tabDescriptions = document.querySelectorAll('.design__descr')
 const tabImages = document.querySelectorAll('.design-images')
+const tabBlockImg = document.querySelectorAll('.design-block > .design-block__img')
+const tabTitle = document.querySelectorAll('.design__title')
 
-console.log(tabImages);
+console.log(tabTitle);
 
-tabButtons.forEach((tabButton, index) => {
+const changeContent = (array, value) => {
+   array.forEach((elem) => {
+      if (elem.dataset.tabsField === value) {
+         elem.classList.remove('hidden')
+      } else {
+         elem.classList.add('hidden')
+      }
+   })
+}
+
+tabButtons.forEach((tabButton) => {
    tabButton.addEventListener('click', (event) => {
-      tabDescriptions.forEach((descr, indexDescr) => {
-         if (index === indexDescr) {
-            descr.classList.remove('hidden')
-         } else {
-            descr.classList.add('hidden')
-         }
-      })
+      const dataValue = tabButton.dataset.tabsHandler
 
-      tabImages.forEach((image, indexImage) => {
-         if (index === indexImage) {
-            image.classList.remove('hidden')
-         } else {
-            image.classList.add('hidden')
-         }
-      })
+      changeContent(tabDescriptions, dataValue)
+      changeContent(tabImages, dataValue)
+      changeContent(tabBlockImg, dataValue)
+      changeContent(tabTitle, dataValue)
 
       tabButtons.forEach((btn) => {
          if (btn === event.target) {
