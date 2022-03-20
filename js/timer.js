@@ -1,11 +1,14 @@
-timerBlock = document.querySelector('.timer__time')
+const timerBlock = document.querySelector('.timer__time')
+const deadline = '31 march 2022'
+let interval
+
 const updateClock = () => {
    const date = new Date().getTime()
-   const dateDeadline = new Date('31 march 2022').getTime()
+   const dateDeadline = new Date(deadline).getTime()
    const timeRemaining = (dateDeadline - date) / 1000
 
    const hourse = Math.floor(timeRemaining / 60 / 60)
-   const minutes = Math.floor((timeRemaining / 60 / 60) % 60)
+   const minutes = Math.floor((timeRemaining / 60) % 60)
    const seconds = Math.floor(timeRemaining % 60)
 
    const fHours = hourse < 10 ? '0' + hourse : hourse
@@ -13,6 +16,11 @@ const updateClock = () => {
    const fSeconds = seconds < 10 ? '0' + seconds : seconds
 
    timerBlock.textContent = `${fHours}:${fMinutes}:${fSeconds}`
+
+   if (timeRemaining <= 0) {
+      clearInterval(interval)
+      timerBlock.textContent = `00:00:00`
+   }
 }
 updateClock()
-setInterval(updateClock, 500)
+interval = setInterval(updateClock, 500)
